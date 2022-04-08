@@ -6,7 +6,11 @@ class CryptosController < ApplicationController
   
     def create
         crypto = Crypto.create(crypto_params)
-        render json: crypto
+        if crypto.valid?
+            render json: crypto
+        else
+            render json: crypto.errors, status: 422
+        end
     end
 
     def update
@@ -15,7 +19,7 @@ class CryptosController < ApplicationController
         if crypto.valid?
             render json: crypto 
         else
-            render json: crypto.errors
+            render json: crypto.errors, status: 422
         end 
     end
   
